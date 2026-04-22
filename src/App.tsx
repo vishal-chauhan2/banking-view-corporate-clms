@@ -5,6 +5,12 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import Index from "./pages/Index.tsx";
 import NotFound from "./pages/NotFound.tsx";
+import CorporateClients from "./pages/CorporateClients.tsx";
+import Reconciliation from "./pages/Reconciliation.tsx";
+import RiskCompliance from "./pages/RiskCompliance.tsx";
+import Analytics from "./pages/Analytics.tsx";
+import AuditTrail from "./pages/AuditTrail.tsx";
+import PlaceholderPage from "./pages/PlaceholderPage.tsx";
 
 const queryClient = new QueryClient();
 
@@ -16,7 +22,16 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Index />} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+          <Route path="/corporates" element={<CorporateClients />} />
+          <Route path="/reconciliation" element={<Reconciliation />} />
+          <Route path="/risk" element={<RiskCompliance />} />
+          <Route path="/analytics" element={<Analytics />} />
+          <Route path="/audit" element={<AuditTrail />} />
+          <Route path="/employees" element={<PlaceholderPage title="Employee & VPA Management" subtitle="Read-only VPA registry and employee spend visibility" />} />
+          <Route path="/limits" element={<PlaceholderPage title="Limit & Credit Management" subtitle="Maker/Checker workflows for credit line changes" />} />
+          <Route path="/reports" element={<PlaceholderPage title="Regulatory Reports & MIS" subtitle="Pre-built RBI/NPCI report templates with scheduled delivery" />} />
+          <Route path="/users" element={<PlaceholderPage title="User Management & RBAC" subtitle="Role-based access control with four-eyes principle" />} />
+          <Route path="/settings" element={<PlaceholderPage title="Platform Configuration" subtitle="MCC blocklists, velocity rules, and integration settings" />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
