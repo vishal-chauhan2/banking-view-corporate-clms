@@ -2,7 +2,6 @@ import { useState } from "react";
 import { DashboardLayout } from "@/components/layout/DashboardLayout";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Badge } from "@/components/ui/badge";
 import { Search, Filter, Download, Plus, ChevronRight, ArrowUpDown } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { CorporateProfile } from "@/components/corporate/CorporateProfile";
@@ -21,15 +20,26 @@ interface Corporate {
 }
 
 const corporates: Corporate[] = [
-  { id: "1", name: "Tata Consultancy Services", industry: "IT Services", rm: "Priya Sharma", sanctioned: "₹50Cr", utilized: "₹46Cr", utilizationPct: 92, healthScore: 88, status: "Active", lastTxn: "2 min ago" },
-  { id: "2", name: "Infosys Limited", industry: "IT Services", rm: "Amit Kumar", sanctioned: "₹40Cr", utilized: "₹34.8Cr", utilizationPct: 87, healthScore: 91, status: "Active", lastTxn: "15 min ago" },
-  { id: "3", name: "Wipro Technologies", industry: "IT Services", rm: "Neha Gupta", sanctioned: "₹35Cr", utilized: "₹28.3Cr", utilizationPct: 81, healthScore: 42, status: "Under Review", lastTxn: "3 hr ago" },
-  { id: "4", name: "HCL Technologies", industry: "IT Services", rm: "Rajiv Menon", sanctioned: "₹30Cr", utilized: "₹22.2Cr", utilizationPct: 74, healthScore: 76, status: "Active", lastTxn: "1 hr ago" },
-  { id: "5", name: "Tech Mahindra", industry: "IT Services", rm: "Priya Sharma", sanctioned: "₹25Cr", utilized: "₹17Cr", utilizationPct: 68, healthScore: 83, status: "Active", lastTxn: "45 min ago" },
-  { id: "6", name: "Larsen & Toubro", industry: "Engineering", rm: "Amit Kumar", sanctioned: "₹60Cr", utilized: "₹37.8Cr", utilizationPct: 63, healthScore: 94, status: "Active", lastTxn: "30 min ago" },
-  { id: "7", name: "Mindtree Ltd", industry: "IT Services", rm: "Neha Gupta", sanctioned: "₹15Cr", utilized: "₹8.5Cr", utilizationPct: 57, healthScore: 71, status: "Active", lastTxn: "2 hr ago" },
-  { id: "8", name: "Reliance Industries", industry: "Conglomerate", rm: "Rajiv Menon", sanctioned: "₹100Cr", utilized: "₹48Cr", utilizationPct: 48, healthScore: 96, status: "Active", lastTxn: "5 min ago" },
-  { id: "9", name: "Bajaj Finance", industry: "NBFC", rm: "Priya Sharma", sanctioned: "₹20Cr", utilized: "₹3.2Cr", utilizationPct: 16, healthScore: 58, status: "Frozen", lastTxn: "14 days ago" },
+  { id: "1", name: "Indo Amines Ltd.", industry: "Chemicals / Pharma", rm: "Priya Sharma", sanctioned: "₹12Cr", utilized: "₹11.2Cr", utilizationPct: 93, healthScore: 62, status: "Active", lastTxn: "2 min ago" },
+  { id: "2", name: "Fermenta Biotech Ltd.", industry: "Chemicals / Pharma", rm: "Amit Kumar", sanctioned: "₹10Cr", utilized: "₹6.5Cr", utilizationPct: 65, healthScore: 88, status: "Active", lastTxn: "15 min ago" },
+  { id: "3", name: "Bajaj Healthcare Ltd.", industry: "Chemicals / Pharma", rm: "Neha Gupta", sanctioned: "₹8Cr", utilized: "₹5.2Cr", utilizationPct: 65, healthScore: 91, status: "Active", lastTxn: "1 hr ago" },
+  { id: "4", name: "Trident Lifeline Ltd.", industry: "Chemicals / Pharma", rm: "Rajiv Menon", sanctioned: "₹6Cr", utilized: "₹3.8Cr", utilizationPct: 63, healthScore: 79, status: "Active", lastTxn: "3 hr ago" },
+  { id: "5", name: "Aayush Wellness Ltd.", industry: "Chemicals / Pharma", rm: "Priya Sharma", sanctioned: "₹5Cr", utilized: "₹1.2Cr", utilizationPct: 24, healthScore: 85, status: "Active", lastTxn: "45 min ago" },
+  { id: "6", name: "Innovana Thinklabs Ltd.", industry: "Tech / IT / Digital", rm: "Amit Kumar", sanctioned: "₹8Cr", utilized: "₹7.1Cr", utilizationPct: 89, healthScore: 58, status: "Under Review", lastTxn: "5 min ago" },
+  { id: "7", name: "Ksolves India Ltd.", industry: "Tech / IT / Digital", rm: "Neha Gupta", sanctioned: "₹6Cr", utilized: "₹4.3Cr", utilizationPct: 72, healthScore: 83, status: "Active", lastTxn: "30 min ago" },
+  { id: "8", name: "Chatterbox Technologies Ltd.", industry: "Tech / IT / Digital", rm: "Rajiv Menon", sanctioned: "₹4Cr", utilized: "₹2.1Cr", utilizationPct: 53, healthScore: 76, status: "Active", lastTxn: "2 hr ago" },
+  { id: "9", name: "Optivalue Tek Consulting Ltd.", industry: "Tech / IT / Digital", rm: "Priya Sharma", sanctioned: "₹3Cr", utilized: "₹1.4Cr", utilizationPct: 47, healthScore: 81, status: "Active", lastTxn: "1 hr ago" },
+  { id: "10", name: "V2 Retail Ltd.", industry: "Consumer / Retail", rm: "Amit Kumar", sanctioned: "₹15Cr", utilized: "₹12.6Cr", utilizationPct: 84, healthScore: 71, status: "Active", lastTxn: "10 min ago" },
+  { id: "11", name: "Thangamayil Jewellery Ltd.", industry: "Consumer / Retail", rm: "Neha Gupta", sanctioned: "₹20Cr", utilized: "₹11Cr", utilizationPct: 55, healthScore: 92, status: "Active", lastTxn: "20 min ago" },
+  { id: "12", name: "Cupid Ltd.", industry: "Consumer / Retail", rm: "Rajiv Menon", sanctioned: "₹4Cr", utilized: "₹2.8Cr", utilizationPct: 70, healthScore: 77, status: "Active", lastTxn: "4 hr ago" },
+  { id: "13", name: "Connplex Cinemas Ltd.", industry: "Industrial / Manufacturing", rm: "Priya Sharma", sanctioned: "₹7Cr", utilized: "₹4.9Cr", utilizationPct: 70, healthScore: 74, status: "Active", lastTxn: "1 hr ago" },
+  { id: "14", name: "Chemkart India Ltd.", industry: "Industrial / Manufacturing", rm: "Amit Kumar", sanctioned: "₹5Cr", utilized: "₹3.2Cr", utilizationPct: 64, healthScore: 80, status: "Active", lastTxn: "2 hr ago" },
+  { id: "15", name: "Bhadora Industries Ltd.", industry: "Industrial / Manufacturing", rm: "Neha Gupta", sanctioned: "₹9Cr", utilized: "₹2.7Cr", utilizationPct: 30, healthScore: 89, status: "Active", lastTxn: "5 hr ago" },
+  { id: "16", name: "Hardwyn India Ltd.", industry: "Industrial / Manufacturing", rm: "Rajiv Menon", sanctioned: "₹5Cr", utilized: "₹2.1Cr", utilizationPct: 42, healthScore: 82, status: "Active", lastTxn: "3 hr ago" },
+  { id: "17", name: "Globus Power Generation Ltd.", industry: "Energy / Infrastructure", rm: "Priya Sharma", sanctioned: "₹20Cr", utilized: "₹15.4Cr", utilizationPct: 77, healthScore: 68, status: "Active", lastTxn: "8 min ago" },
+  { id: "18", name: "India Power Corporation Ltd.", industry: "Energy / Infrastructure", rm: "Amit Kumar", sanctioned: "₹25Cr", utilized: "₹14Cr", utilizationPct: 56, healthScore: 90, status: "Active", lastTxn: "25 min ago" },
+  { id: "19", name: "Dhanlaxmi Bank Ltd.", industry: "Financial / Misc", rm: "Neha Gupta", sanctioned: "₹25Cr", utilized: "₹14Cr", utilizationPct: 56, healthScore: 94, status: "Active", lastTxn: "12 min ago" },
+  { id: "20", name: "Crest Ventures Ltd.", industry: "Financial / Misc", rm: "Rajiv Menon", sanctioned: "₹10Cr", utilized: "₹3.2Cr", utilizationPct: 32, healthScore: 58, status: "Frozen", lastTxn: "14 days ago" },
 ];
 
 function healthColor(score: number) {
@@ -62,27 +72,21 @@ export default function CorporateClients() {
   }
 
   return (
-    <DashboardLayout title="Corporate Client Management" subtitle="147 active corporates across portfolio">
+    <DashboardLayout title="Corporate Client Management" subtitle={`${corporates.length} corporates across portfolio`}>
       {/* Toolbar */}
       <div className="flex flex-wrap items-center gap-3 mb-4">
         <div className="relative flex-1 max-w-sm">
           <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-muted-foreground" />
           <Input placeholder="Search by name, CIN, RM..." className="pl-8 h-9 text-sm" />
         </div>
-        <Button variant="outline" size="sm" className="h-9 text-xs gap-1.5">
-          <Filter className="w-3.5 h-3.5" /> Filters
-        </Button>
-        <Button variant="outline" size="sm" className="h-9 text-xs gap-1.5">
-          <Download className="w-3.5 h-3.5" /> Export
-        </Button>
-        <Button size="sm" className="h-9 text-xs gap-1.5 ml-auto">
-          <Plus className="w-3.5 h-3.5" /> Onboard Corporate
-        </Button>
+        <Button variant="outline" size="sm" className="h-9 text-xs gap-1.5"><Filter className="w-3.5 h-3.5" /> Filters</Button>
+        <Button variant="outline" size="sm" className="h-9 text-xs gap-1.5"><Download className="w-3.5 h-3.5" /> Export</Button>
+        <Button size="sm" className="h-9 text-xs gap-1.5 ml-auto"><Plus className="w-3.5 h-3.5" /> Onboard Corporate</Button>
       </div>
 
       {/* Quick filters */}
       <div className="flex gap-2 mb-4">
-        {["All (147)", "Utilization > 80%", "NPA Warning", "KYC Expiring"].map((f, i) => (
+        {[`All (${corporates.length})`, "Utilization > 80%", "NPA Warning", "KYC Expiring"].map((f, i) => (
           <button
             key={f}
             className={cn(
