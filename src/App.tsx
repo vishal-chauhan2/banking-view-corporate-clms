@@ -11,6 +11,7 @@ import RiskCompliance from "./pages/RiskCompliance.tsx";
 import Analytics from "./pages/Analytics.tsx";
 import AuditTrail from "./pages/AuditTrail.tsx";
 import PlaceholderPage from "./pages/PlaceholderPage.tsx";
+import UserManagement from "./pages/UserManagement.tsx";
 
 const queryClient = new QueryClient();
 
@@ -30,7 +31,7 @@ const App = () => (
           <Route path="/employees" element={<PlaceholderPage title="Employee & VPA Management" subtitle="Read-only VPA registry and employee spend visibility" />} />
           <Route path="/limits" element={<PlaceholderPage title="Limit & Credit Management" subtitle="Maker/Checker workflows for credit line changes" />} />
           <Route path="/reports" element={<PlaceholderPage title="Regulatory Reports & MIS" subtitle="Pre-built RBI/NPCI report templates with scheduled delivery" />} />
-          <Route path="/users" element={<PlaceholderPage title="User Management & RBAC" subtitle="Role-based access control with four-eyes principle" />} />
+          <Route path="/users" element={<UserManagement />} />
           <Route path="/settings" element={<PlaceholderPage title="Platform Configuration" subtitle="MCC blocklists, velocity rules, and integration settings" />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
