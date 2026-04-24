@@ -13,6 +13,7 @@ import AuditTrail from "./pages/AuditTrail.tsx";
 import PlaceholderPage from "./pages/PlaceholderPage.tsx";
 import UserManagement from "./pages/UserManagement.tsx";
 import LimitManagement from "./pages/LimitManagement.tsx";
+import EmployeeVPA from "./pages/EmployeeVPA.tsx";
 
 const queryClient = new QueryClient();
 
@@ -29,7 +30,7 @@ const App = () => (
           <Route path="/risk" element={<RiskCompliance />} />
           <Route path="/analytics" element={<Analytics />} />
           <Route path="/audit" element={<AuditTrail />} />
-          <Route path="/employees" element={<PlaceholderPage title="Employee & VPA Management" subtitle="Read-only VPA registry and employee spend visibility" />} />
+          <Route path="/employees" element={<EmployeeVPA />} />
           <Route path="/limits" element={<LimitManagement />} />
           <Route path="/reports" element={<PlaceholderPage title="Regulatory Reports & MIS" subtitle="Pre-built RBI/NPCI report templates with scheduled delivery" />} />
           <Route path="/users" element={<UserManagement />} />
