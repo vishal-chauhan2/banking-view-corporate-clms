@@ -1,8 +1,17 @@
 import { useState } from "react";
-import { Bell, Search, CheckCircle2, ShieldAlert, AlertTriangle, Clock, ArrowUpRight, X } from "lucide-react";
+import { Bell, Search, CheckCircle2, ShieldAlert, AlertTriangle, Clock, X, User, Settings, LogOut, ShieldCheck } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { useToast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
 
 interface Notification {
@@ -35,8 +44,10 @@ interface TopBarProps {
 }
 
 export function TopBar({ title, subtitle }: TopBarProps) {
+  const { toast } = useToast();
   const [notifications, setNotifications] = useState<Notification[]>(defaultNotifications);
   const [open, setOpen] = useState(false);
+  const [search, setSearch] = useState("");
 
   const dismiss = (id: string) => {
     setNotifications((prev) => prev.filter((n) => n.id !== id));
@@ -44,6 +55,12 @@ export function TopBar({ title, subtitle }: TopBarProps) {
 
   const dismissAll = () => {
     setNotifications([]);
+  };
+
+  const onSearchSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!search.trim()) return;
+    toast({ title: "Search", description: `Searching for “${search}”...` });
   };
 
   const count = notifications.length;
@@ -63,13 +80,15 @@ export function TopBar({ title, subtitle }: TopBarProps) {
         </div>
 
         {/* Search */}
-        <div className="relative hidden lg:block">
+        <form onSubmit={onSearchSubmit} className="relative hidden lg:block">
           <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-muted-foreground" />
           <Input
             placeholder="Search corporates, VPAs, txns..."
             className="w-64 h-8 pl-8 text-xs"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
           />
-        </div>
+        </form>
 
         {/* Notifications */}
         <Popover open={open} onOpenChange={setOpen}>
@@ -128,16 +147,43 @@ export function TopBar({ title, subtitle }: TopBarProps) {
           </PopoverContent>
         </Popover>
 
-        {/* User */}
-        <div className="flex items-center gap-2 pl-2 border-l">
-          <div className="w-7 h-7 rounded-full bg-primary flex items-center justify-center text-xs font-bold text-primary-foreground">
-            RA
-          </div>
-          <div className="hidden md:block">
-            <p className="text-xs font-medium text-foreground">Rajesh Agarwal</p>
-            <p className="text-[10px] text-muted-foreground">Super Admin</p>
-          </div>
-        </div>
+        {/* User dropdown */}
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <button className="flex items-center gap-2 pl-2 border-l hover:opacity-80 transition-opacity">
+              <div className="w-7 h-7 rounded-full bg-primary flex items-center justify-center text-xs font-bold text-primary-foreground">
+                RA
+              </div>
+              <div className="hidden md:block text-left">
+                <p className="text-xs font-medium text-foreground">Rajesh Agarwal</p>
+                <p className="text-[10px] text-muted-foreground">Super Admin</p>
+              </div>
+            </button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end" className="w-56">
+            <DropdownMenuLabel>
+              <div className="font-semibold text-sm">Rajesh Agarwal</div>
+              <div className="text-[11px] text-muted-foreground font-normal">rajesh.a@bank.in</div>
+            </DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem onClick={() => toast({ title: "Profile", description: "Opening profile settings..." })}>
+              <User className="w-3.5 h-3.5 mr-2" /> My Profile
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => toast({ title: "Permissions", description: "Super Admin · Full system access" })}>
+              <ShieldCheck className="w-3.5 h-3.5 mr-2" /> My Permissions
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => toast({ title: "Settings", description: "Opening preferences..." })}>
+              <Settings className="w-3.5 h-3.5 mr-2" /> Preferences
+            </DropdownMenuItem>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem
+              onClick={() => toast({ title: "Signed out", description: "Session ended securely.", variant: "destructive" })}
+              className="text-critical focus:text-critical"
+            >
+              <LogOut className="w-3.5 h-3.5 mr-2" /> Sign Out
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </div>
     </header>
   );
