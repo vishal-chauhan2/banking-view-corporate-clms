@@ -1,8 +1,17 @@
 import { useState } from "react";
-import { Bell, Search, CheckCircle2, ShieldAlert, AlertTriangle, Clock, ArrowUpRight, X } from "lucide-react";
+import { Bell, Search, CheckCircle2, ShieldAlert, AlertTriangle, Clock, X, User, Settings, LogOut, ShieldCheck } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { useToast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
 
 interface Notification {
